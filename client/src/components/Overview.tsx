@@ -1,32 +1,32 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Country } from "../types";
+import { UsersInCountry } from "../types";
 import { theme } from "../theme";
 
-import countriesList from "../response.mock.json";
+import usersInCountriesMock from "../response.mock.json";
 
 interface Props {
-  countries: Country[];
-  setCountries: (countries: Country[]) => void;
+  usersInCountries: UsersInCountry[];
+  setUsersInCountries: (countries: UsersInCountry[]) => void;
 }
 
-function getCountries(): Promise<Country[]> {
+function getUsersInCountries(): Promise<UsersInCountry[]> {
   return new Promise((resolve) =>
-    setTimeout(() => resolve(countriesList), 1500)
+    setTimeout(() => resolve(usersInCountriesMock), 1500)
   );
 }
 
-function getTotalUsers(countries: Country[]): number {
-  return countries.reduce((sumUsers, country) => sumUsers += country.users, 0);
+function getTotalUsers(usersInCountries: UsersInCountry[]): number {
+  return usersInCountries.reduce((sumUsers, usersInCountry) => sumUsers += usersInCountry.users, 0);
 }
 
-function Overview({ countries, setCountries }: Props): JSX.Element {
-  const totalUsers = getTotalUsers(countries ?? []);
+function Overview({ usersInCountries, setUsersInCountries }: Props): JSX.Element {
+  const totalUsers = getTotalUsers(usersInCountries ?? []);
 
-  async function fetchCountries() {
+  async function fetchUsersInCountries() {
     try {
-      return await getCountries();
+      return await getUsersInCountries();
     } catch (error) {
       console.error(error);
     }
@@ -34,30 +34,31 @@ function Overview({ countries, setCountries }: Props): JSX.Element {
 
   React.useEffect(() => {
     async function initializePage() {
-      const response = await fetchCountries();
+      const response = await fetchUsersInCountries();
 
-      setCountries(response);
+      setUsersInCountries(response);
     }
 
     initializePage();
   }, []);
 
   return (
-    <div>
+    <>
+      {console.warn({usersInCountries})}
       <TotalUsers>
         Total users: {totalUsers}
       </TotalUsers>
-      {countries?.map((country) => (
-        <div key={country.name}>{country.name}</div>
+      {usersInCountries?.map((usersInCountry) => (
+        <div key={usersInCountry.country}>{usersInCountry.users}</div>
       ))}
-    </div>
+    </>
   );
 }
 
 const TotalUsers = styled.div`
-  border-radius: 5px;
-  box-shadow: 0 0 1px 1px ${theme.colors.totalUsersBoxBorder};
-  background-color: ${theme.colors.totalUsersBoxBackground};
+  border-radius: ${theme.borderRadius};
+  box-shadow: ${theme.boxShadow};
+  background-color: ${theme.colors.boxBackground};
   padding: 20px;
   display: flex;
   justify-content: center;

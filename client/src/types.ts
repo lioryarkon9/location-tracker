@@ -1,8 +1,8 @@
 import { type } from "os";
 
-export interface Country {
-  name: string;
+export interface UsersInCountry {
+  country: string;
   users: number;
 }
 
-export type AddCountry = (country: Country) => void;
+export type AddUsersInCountry = (usersInCountry: UsersInCountry) => void;
