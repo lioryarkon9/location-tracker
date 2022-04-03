@@ -2,7 +2,7 @@ import { type } from "os";
 
 export interface Country {
   name: string;
-  users: Number;
+  users: number;
 }
 
 export type AddCountry = (country: Country) => void;
