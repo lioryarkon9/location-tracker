@@ -10,7 +10,9 @@ import Add from "./Add";
 import countriesList from "../response.mock.json";
 
 function App(): JSX.Element {
-  const [usersInCountries, setUsersInCountries] = React.useState<null | UsersInCountry[]>(null);
+  const [usersInCountries, setUsersInCountries] = React.useState<
+    null | UsersInCountry[]
+  >(null);
 
   function addUsersInCountry(usersInCountry: UsersInCountry): void {
     setUsersInCountries([...usersInCountries, usersInCountry]);
@@ -21,11 +23,17 @@ function App(): JSX.Element {
       <Layout>
         <Routes>
           <Route path="/" element={<Navigate to="/overview" replace />} />
-          <Route path="/add" element={<Add addUsersInCountry={addUsersInCountry} />} />
+          <Route
+            path="/add"
+            element={<Add addUsersInCountry={addUsersInCountry} />}
+          />
           <Route
             path="/overview"
             element={
-              <Overview usersInCountries={usersInCountries} setUsersInCountries={setUsersInCountries} />
+              <Overview
+                usersInCountries={usersInCountries}
+                setUsersInCountries={setUsersInCountries}
+              />
             }
           />
         </Routes>

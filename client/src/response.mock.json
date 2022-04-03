@@ -1,1 +1,22 @@
-[{"country":"Germany","users":2000},{"country":"Afghanistan","users":1030},{"country":"Poland","users":1250},{"country":"France","users":125},{"country":"Iceland","users":165},{"country":"Italy","users":2350},{"country":"Finland","users":1250},{"country":"Ukraine","users":2500},{"country":"Spain","users":1010},{"country":"Belgium","users":150},{"country":"Turkey","users":480},{"country":"Kenya","users":1230},{"country":"Andorra","users":35},{"country":"Romania","users":980},{"country":"Argentina","users":13},{"country":"India","users":10000},{"country":"Federated States Of Micronesia","users":2},{"country":"Albania","users":1},{"country":"Marshall Islands","users":7},{"country":"Barbados","users":32223}]
+[
+  { "country": "Germany", "users": 2000 },
+  { "country": "Afghanistan", "users": 1030 },
+  { "country": "Poland", "users": 1250 },
+  { "country": "France", "users": 125 },
+  { "country": "Iceland", "users": 165 },
+  { "country": "Italy", "users": 2350 },
+  { "country": "Finland", "users": 1250 },
+  { "country": "Ukraine", "users": 2500 },
+  { "country": "Spain", "users": 1010 },
+  { "country": "Belgium", "users": 150 },
+  { "country": "Turkey", "users": 480 },
+  { "country": "Kenya", "users": 1230 },
+  { "country": "Andorra", "users": 35 },
+  { "country": "Romania", "users": 980 },
+  { "country": "Argentina", "users": 13 },
+  { "country": "India", "users": 10000 },
+  { "country": "Federated States Of Micronesia", "users": 2 },
+  { "country": "Albania", "users": 1 },
+  { "country": "Marshall Islands", "users": 7 },
+  { "country": "Barbados", "users": 32223 }
+]

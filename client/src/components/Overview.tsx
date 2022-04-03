@@ -18,10 +18,16 @@ function getUsersInCountries(): Promise<UsersInCountry[]> {
 }
 
 function getTotalUsers(usersInCountries: UsersInCountry[]): number {
-  return usersInCountries.reduce((sumUsers, usersInCountry) => sumUsers += usersInCountry.users, 0);
+  return usersInCountries.reduce(
+    (sumUsers, usersInCountry) => (sumUsers += usersInCountry.users),
+    0
+  );
 }
 
-function Overview({ usersInCountries, setUsersInCountries }: Props): JSX.Element {
+function Overview({
+  usersInCountries,
+  setUsersInCountries,
+}: Props): JSX.Element {
   const totalUsers = getTotalUsers(usersInCountries ?? []);
 
   async function fetchUsersInCountries() {
@@ -44,10 +50,7 @@ function Overview({ usersInCountries, setUsersInCountries }: Props): JSX.Element
 
   return (
     <>
-      {console.warn({usersInCountries})}
-      <TotalUsers>
-        Total users: {totalUsers}
-      </TotalUsers>
+      <TotalUsers>Total users: {totalUsers}</TotalUsers>
       {usersInCountries?.map((usersInCountry) => (
         <div key={usersInCountry.country}>{usersInCountry.users}</div>
       ))}
@@ -64,7 +67,7 @@ const TotalUsers = styled.div`
   justify-content: center;
 
   @media only screen and (max-width: 600px) {
-    display: block
+    display: block;
   }
 `;
 
