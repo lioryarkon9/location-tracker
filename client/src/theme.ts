@@ -2,7 +2,7 @@ const BOX_BORDER_COLOR = "#827e7e";
 
 export const theme = {
   colors: {
-    boxBackground: "#d5d0d0",
+    boxBackground: "#e9e4e4",
     boxBorder: BOX_BORDER_COLOR,
   },
   boxShadow: `0 0 1px 1px ${BOX_BORDER_COLOR}`,
