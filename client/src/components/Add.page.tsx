@@ -7,20 +7,25 @@ import { theme } from "../theme";
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import ProgressBar from "@mui/material/LinearProgress";
 
 function Add(): JSX.Element {
   const [country, setCountry] = React.useState<string>("");
   const [users, setUsers] = React.useState<string>("");
+  const [isSumbitting, setIsSubmitting] = React.useState<boolean>(false);
 
   async function submit() {
-    try {
-      const response = await apis.addUsersByCountry(country, users);
+    setIsSubmitting(true);
 
-      console.log({ response });
+    try {
+      await apis.addUsersByCountry(country, users);
+
       toast.success("submitted successfully");
     } catch (error) {
       console.error(error);
       toast.error("something went wrong - try again later");
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -43,6 +48,8 @@ function Add(): JSX.Element {
           fullWidth
         />
         <hr />
+
+        {isSumbitting && <ProgressBar />}
 
         <Button variant="contained" fullWidth onClick={submit}>
           Submit

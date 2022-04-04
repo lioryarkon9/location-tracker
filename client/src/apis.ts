@@ -1,4 +1,5 @@
 import { UsersByCountry } from "./types";
+import usersByCountriesMock from "./response.mock.json";
 
 interface MockResponse {
   json: () => UsersByCountry[];

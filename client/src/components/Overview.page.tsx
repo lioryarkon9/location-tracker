@@ -7,6 +7,8 @@ import * as utils from "../utils";
 import * as apis from "../apis";
 import { theme } from "../theme";
 
+import ProgressBar from "@mui/material/LinearProgress";
+
 interface Props {
   usersByCountries: UsersByCountry[];
   setUsersByCountries: (countries: UsersByCountry[]) => void;
@@ -42,6 +44,7 @@ function Overview({
   return (
     <>
       <TotalUsers>Total users: {totalUsers}</TotalUsers>
+      {usersByCountries === null && <ProgressBar />}
       <Container>
         <Chart
           chartType="GeoChart"
