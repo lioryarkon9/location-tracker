@@ -4,8 +4,8 @@ import { Route, BrowserRouter, Routes, Navigate } from "react-router-dom";
 import { UsersByCountry } from "../types";
 
 import Layout from "./Layout";
-import Overview from "./Overview";
-import Add from "./Add";
+import Overview from "./Overview.page";
+import Add from "./Add.page";
 
 function App(): JSX.Element {
   const [usersByCountries, setUsersByCountries] = React.useState<
