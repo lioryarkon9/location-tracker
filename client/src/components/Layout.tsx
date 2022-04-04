@@ -1,25 +1,30 @@
 import styled from "styled-components";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 
-import {theme} from '../theme';
+import { theme } from "../theme";
 
 function Layout({ children }): JSX.Element {
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
 
   return (
     <Container>
       <Content>{children}</Content>
       <Menu>
-        <Link to="/overview" isActive={pathname === "/overview"}>Overivew</Link>
-        <Link to="/add" isActive={pathname === "/add"}>Add</Link>
+        <Link to="/overview" isActive={pathname === "/overview"}>
+          Overivew
+        </Link>
+        <Link to="/add" isActive={pathname === "/add"}>
+          Add
+        </Link>
       </Menu>
     </Container>
   );
 }
 
 const Link = styled(RouterLink)`
-  background-color: ${({isActive}) => isActive ? theme.colors.activeElement : "inherit"};
-  color: ${({isActive}) => isActive ? theme.colors.activeFont : "inherit"};
+  background-color: ${({ isActive }) =>
+    isActive ? theme.colors.activeElement : "inherit"};
+  color: ${({ isActive }) => (isActive ? theme.colors.activeFont : "inherit")};
   text-decoration: none;
   width: 100%;
   display: flex;

@@ -22,7 +22,7 @@ function App(): JSX.Element {
             path="/overview"
             element={
               <Overview
-                usersInCountries={usersByCountries}
+                usersByCountries={usersByCountries}
                 setUsersByCountries={setUsersByCountries}
               />
             }

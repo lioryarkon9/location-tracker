@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Chart from "react-google-charts";
 
 import { UsersByCountry } from "../types";
 import { theme } from "../theme";
@@ -7,7 +8,7 @@ import { theme } from "../theme";
 import usersByCountriesMock from "../response.mock.json";
 
 interface Props {
-  usersInCountries: UsersByCountry[];
+  usersByCountries: UsersByCountry[];
   setUsersByCountries: (countries: UsersByCountry[]) => void;
 }
 
@@ -16,24 +17,30 @@ interface MockResponse {
 }
 
 function getUsersByCountries(): Promise<Response | MockResponse> {
-  return new Promise((resolve) =>
-    setTimeout(() => resolve({ json: () => usersByCountriesMock }), 1500)
-  );
-  // return fetch("http://52.3.78.233/users");
+  // return new Promise((resolve) =>
+  //   setTimeout(() => resolve({ json: () => usersByCountriesMock }), 1500)
+  // );
+  return fetch("http://52.3.78.233/users");
 }
 
-function getTotalUsers(usersInCountries: UsersByCountry[]): number {
-  return usersInCountries.reduce(
-    (sumUsers, usersInCountry) => (sumUsers += usersInCountry.users),
+function getTotalUsers(usersByCountries: UsersByCountry[]): number {
+  return usersByCountries.reduce(
+    (sumUsers, usersByCountry) => (sumUsers += usersByCountry.users),
     0
   );
 }
 
 function Overview({
-  usersInCountries,
+  usersByCountries,
   setUsersByCountries,
 }: Props): JSX.Element {
-  const totalUsers = getTotalUsers(usersInCountries ?? []);
+  const totalUsers = getTotalUsers(usersByCountries ?? []);
+  const uiUsersByCountries = Array.isArray(usersByCountries)
+    ? usersByCountries.map((usersByCountry) => [
+        usersByCountry.country,
+        usersByCountry.users,
+      ])
+    : [];
 
   async function fetchUsersByCountries() {
     try {
@@ -58,12 +65,19 @@ function Overview({
   return (
     <>
       <TotalUsers>Total users: {totalUsers}</TotalUsers>
-      {usersInCountries?.map((usersInCountry) => (
-        <div key={usersInCountry.country}>{usersInCountry.users}</div>
-      ))}
+      <Container>
+        <Chart
+          chartType="GeoChart"
+          data={[["Country", "Users"], ...uiUsersByCountries]}
+        />
+      </Container>
     </>
   );
 }
+
+const Container = styled.div`
+  padding: 10px 0;
+`;
 
 const TotalUsers = styled.div`
   border-radius: ${theme.borderRadius};
