@@ -3,48 +3,25 @@ import styled from "styled-components";
 import Chart from "react-google-charts";
 
 import { UsersByCountry } from "../types";
+import * as utils from "../utils";
+import * as apis from "../apis";
 import { theme } from "../theme";
-
-import usersByCountriesMock from "../response.mock.json";
 
 interface Props {
   usersByCountries: UsersByCountry[];
   setUsersByCountries: (countries: UsersByCountry[]) => void;
 }
 
-interface MockResponse {
-  json: () => UsersByCountry[];
-}
-
-function getUsersByCountries(): Promise<Response | MockResponse> {
-  // return new Promise((resolve) =>
-  //   setTimeout(() => resolve({ json: () => usersByCountriesMock }), 1500)
-  // );
-  return fetch("http://52.3.78.233/users");
-}
-
-function getTotalUsers(usersByCountries: UsersByCountry[]): number {
-  return usersByCountries.reduce(
-    (sumUsers, usersByCountry) => (sumUsers += usersByCountry.users),
-    0
-  );
-}
-
 function Overview({
   usersByCountries,
   setUsersByCountries,
 }: Props): JSX.Element {
-  const totalUsers = getTotalUsers(usersByCountries ?? []);
-  const uiUsersByCountries = Array.isArray(usersByCountries)
-    ? usersByCountries.map((usersByCountry) => [
-        usersByCountry.country,
-        usersByCountry.users,
-      ])
-    : [];
+  const totalUsers = utils.getTotalUsers(usersByCountries ?? []);
+  const uiUsersByCountries = utils.getUiUSersByCountries(usersByCountries);
 
   async function fetchUsersByCountries() {
     try {
-      const response = await getUsersByCountries();
+      const response = await apis.getUsersByCountries();
 
       return await response.json();
     } catch (error) {

@@ -2,22 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import toast, { Toaster } from "react-hot-toast";
 
+import * as apis from "../apis";
 import { theme } from "../theme";
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-
-async function addUsersByCountry(country: string, users: string): Promise<any> {
-  const response = await fetch("http://52.3.78.233/users", {
-    method: "POST",
-    body: JSON.stringify({
-      country,
-      users: parseInt(users),
-    }),
-  });
-
-  return response.json();
-}
 
 function Add(): JSX.Element {
   const [country, setCountry] = React.useState<string>("");
@@ -25,7 +14,7 @@ function Add(): JSX.Element {
 
   async function submit() {
     try {
-      const response = await addUsersByCountry(country, users);
+      const response = await apis.addUsersByCountry(country, users);
 
       console.log({ response });
       toast.success("submitted successfully");
