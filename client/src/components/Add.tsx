@@ -1,21 +1,43 @@
-import React, { SyntheticEvent } from "react";
+import React from "react";
 import styled from "styled-components";
+import toast, { Toaster } from "react-hot-toast";
 
 import { theme } from "../theme";
-import { AddUsersInCountry } from "../types";
 
 import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
-interface Props {
-  addUsersInCountry: AddUsersInCountry;
+async function addUsersByCountry(country: string, users: string): Promise<any> {
+  const response = await fetch("http://52.3.78.233/users", {
+    method: "POST",
+    body: JSON.stringify({
+      country,
+      users: parseInt(users),
+    }),
+  });
+
+  return response.json();
 }
 
-function Add({ addUsersInCountry }: Props): JSX.Element {
+function Add(): JSX.Element {
   const [country, setCountry] = React.useState<string>("");
   const [users, setUsers] = React.useState<string>("");
 
+  async function submit() {
+    try {
+      const response = await addUsersByCountry(country, users);
+
+      console.log({ response });
+      toast.success("submitted successfully");
+    } catch (error) {
+      console.error(error);
+      toast.error("something went wrong - try again later");
+    }
+  }
+
   return (
     <Container>
+      <Toaster />
       <Form>
         <TextField
           value={country}
@@ -31,6 +53,11 @@ function Add({ addUsersInCountry }: Props): JSX.Element {
           label="Users"
           fullWidth
         />
+        <hr />
+
+        <Button variant="contained" fullWidth onClick={submit}>
+          Submit
+        </Button>
       </Form>
     </Container>
   );
@@ -41,7 +68,6 @@ const Form = styled.form`
   box-shadow: ${theme.boxShadow};
   border-radius: ${theme.borderRadius};
   width: 600px;
-  min-height: 300px;
   padding: 5px;
   @media only screen and (max-width: 600px) {
     width: auto;

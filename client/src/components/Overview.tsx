@@ -1,23 +1,28 @@
 import React from "react";
 import styled from "styled-components";
 
-import { UsersInCountry } from "../types";
+import { UsersByCountry } from "../types";
 import { theme } from "../theme";
 
-import usersInCountriesMock from "../response.mock.json";
+import usersByCountriesMock from "../response.mock.json";
 
 interface Props {
-  usersInCountries: UsersInCountry[];
-  setUsersInCountries: (countries: UsersInCountry[]) => void;
+  usersInCountries: UsersByCountry[];
+  setUsersByCountries: (countries: UsersByCountry[]) => void;
 }
 
-function getUsersInCountries(): Promise<UsersInCountry[]> {
+interface MockResponse {
+  json: () => UsersByCountry[];
+}
+
+function getUsersByCountries(): Promise<Response | MockResponse> {
   return new Promise((resolve) =>
-    setTimeout(() => resolve(usersInCountriesMock), 1500)
+    setTimeout(() => resolve({ json: () => usersByCountriesMock }), 1500)
   );
+  // return fetch("http://52.3.78.233/users");
 }
 
-function getTotalUsers(usersInCountries: UsersInCountry[]): number {
+function getTotalUsers(usersInCountries: UsersByCountry[]): number {
   return usersInCountries.reduce(
     (sumUsers, usersInCountry) => (sumUsers += usersInCountry.users),
     0
@@ -26,13 +31,15 @@ function getTotalUsers(usersInCountries: UsersInCountry[]): number {
 
 function Overview({
   usersInCountries,
-  setUsersInCountries,
+  setUsersByCountries,
 }: Props): JSX.Element {
   const totalUsers = getTotalUsers(usersInCountries ?? []);
 
-  async function fetchUsersInCountries() {
+  async function fetchUsersByCountries() {
     try {
-      return await getUsersInCountries();
+      const response = await getUsersByCountries();
+
+      return await response.json();
     } catch (error) {
       console.error(error);
     }
@@ -40,9 +47,9 @@ function Overview({
 
   React.useEffect(() => {
     async function initializePage() {
-      const response = await fetchUsersInCountries();
+      const response = await fetchUsersByCountries();
 
-      setUsersInCountries(response);
+      setUsersByCountries(response);
     }
 
     initializePage();
