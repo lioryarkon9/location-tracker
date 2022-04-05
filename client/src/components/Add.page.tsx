@@ -63,9 +63,11 @@ const Form = styled.form`
   background-color: ${theme.colors.boxBackground};
   box-shadow: ${theme.boxShadow};
   border-radius: ${theme.borderRadius};
-  width: 600px;
+  width: 100%;
+  max-width: 600px;
   padding: 5px;
   @media only screen and (max-width: 600px) {
+    max-width: none;
     width: auto;
   }
 `;
