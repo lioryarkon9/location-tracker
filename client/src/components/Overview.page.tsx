@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Chart from "react-google-charts";
+import toast, { Toaster } from "react-hot-toast";
 
 import { UsersByCountry } from "../types";
 import * as utils from "../utils";
@@ -9,15 +10,11 @@ import { theme } from "../theme";
 
 import ProgressBar from "@mui/material/LinearProgress";
 
-interface Props {
-  usersByCountries: UsersByCountry[];
-  setUsersByCountries: (countries: UsersByCountry[]) => void;
-}
+function Overview(): JSX.Element {
+  const [usersByCountries, setUsersByCountries] = React.useState<
+    null | UsersByCountry[]
+  >(null);
 
-function Overview({
-  usersByCountries,
-  setUsersByCountries,
-}: Props): JSX.Element {
   const totalUsers = utils.getTotalUsers(usersByCountries ?? []);
   const uiUsersByCountries = utils.getUiUSersByCountries(usersByCountries);
 
@@ -28,6 +25,7 @@ function Overview({
       return await response.json();
     } catch (error) {
       console.error(error);
+      toast.error("System error. Please try again later");
     }
   }
 
@@ -43,6 +41,7 @@ function Overview({
 
   return (
     <>
+      <Toaster />
       <TotalUsers>Total users: {totalUsers}</TotalUsers>
       {usersByCountries === null && <ProgressBar />}
       <Container>
