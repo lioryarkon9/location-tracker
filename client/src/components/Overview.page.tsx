@@ -48,6 +48,7 @@ function Overview(): JSX.Element {
         <Chart
           chartType="GeoChart"
           data={[["Country", "Users"], ...uiUsersByCountries]}
+          options={{ magnifyingGlass: { enable: true, zoomFactor: 5.0 } }}
         />
       </Container>
     </>
