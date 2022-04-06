@@ -29,6 +29,32 @@ function Overview(): JSX.Element {
     }
   }
 
+  function zoomChartOnClick(event) {
+    const chart = event.chartWrapper.getChart();
+    const selection = chart.getSelection();
+    const chartContainer = document.querySelector("#my-chart-container");
+
+    const isInZoomMode =
+      chartContainer.getAttribute("style") === "transform: scale(2)";
+    const zoomIn = () =>
+      chartContainer.setAttribute("style", "transform: scale(2)");
+    const zoomAway = () => chartContainer.setAttribute("style", "");
+
+    if (isInZoomMode) {
+      zoomAway();
+
+      return;
+    }
+
+    if (selection.length === 0) {
+      return;
+    }
+
+    if (!isInZoomMode) {
+      zoomIn();
+    }
+  }
+
   React.useEffect(() => {
     async function initializePage() {
       const response = await fetchUsersByCountries();
@@ -49,6 +75,12 @@ function Overview(): JSX.Element {
           chartType="GeoChart"
           data={[["Country", "Users"], ...uiUsersByCountries]}
           options={{ enableRegionInteractivity: true }}
+          chartEvents={[
+            {
+              eventName: "select",
+              callback: zoomChartOnClick,
+            },
+          ]}
         />
       </Container>
     </>
