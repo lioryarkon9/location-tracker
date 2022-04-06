@@ -14,10 +14,16 @@ import ProgressBar from "@mui/material/LinearProgress";
 
 function Add(): JSX.Element {
   const [country, setCountry] = React.useState<string>("");
-  const [users, setUsers] = React.useState<string>("");
+  const [users, setUsers] = React.useState<string>("0");
   const [isSumbitting, setIsSubmitting] = React.useState<boolean>(false);
 
   async function submit() {
+    if (country.length === 0) {
+      toast.error("country is empty");
+
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -46,7 +52,7 @@ function Add(): JSX.Element {
           <MenuItem value="Armenia">Armenia</MenuItem>
           <MenuItem value="Bahamas">Bahamas</MenuItem>
           <MenuItem value="Belarus">Belarus</MenuItem>
-          <MenuItem value="Bhutan">Bhutan</MenuItem>
+          <MenuItem value="Bangladesh">Bangladesh</MenuItem>
         </Select>
         <hr />
         <TextField
