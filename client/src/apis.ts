@@ -18,6 +18,9 @@ export async function addUsersByCountry(
 ): Promise<any> {
   const response = await fetch("http://52.3.78.233/users", {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({
       country,
       users: parseInt(users),

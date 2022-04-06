@@ -44,11 +44,11 @@ function Overview(): JSX.Element {
       <Toaster />
       <TotalUsers>Total users: {totalUsers}</TotalUsers>
       {usersByCountries === null && <ProgressBar />}
-      <Container>
+      <Container id="my-chart-container">
         <Chart
           chartType="GeoChart"
           data={[["Country", "Users"], ...uiUsersByCountries]}
-          options={{ magnifyingGlass: { enable: true, zoomFactor: 5.0 } }}
+          options={{ enableRegionInteractivity: true }}
         />
       </Container>
     </>
