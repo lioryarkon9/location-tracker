@@ -6,6 +6,9 @@ import * as apis from "../apis";
 import { theme } from "../theme";
 
 import TextField from "@mui/material/TextField";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
 import Button from "@mui/material/Button";
 import ProgressBar from "@mui/material/LinearProgress";
 
@@ -33,12 +36,18 @@ function Add(): JSX.Element {
     <Container>
       <Toaster />
       <Form>
-        <TextField
+        <InputLabel>Country</InputLabel>
+        <Select
           value={country}
-          onChange={(event) => setCountry(event.target.value)}
-          label="Country"
           fullWidth
-        />
+          onChange={(event) => setCountry(event.target.value as string)}
+        >
+          <MenuItem value="Angola">Angola</MenuItem>
+          <MenuItem value="Armenia">Armenia</MenuItem>
+          <MenuItem value="Bahamas">Bahamas</MenuItem>
+          <MenuItem value="Belarus">Belarus</MenuItem>
+          <MenuItem value="Bhutan">Bhutan</MenuItem>
+        </Select>
         <hr />
         <TextField
           type="number"
@@ -46,6 +55,7 @@ function Add(): JSX.Element {
           onChange={(event) => setUsers(event.target.value)}
           label="Users"
           fullWidth
+          InputProps={{ inputProps: { min: 0, max: 1000 } }}
         />
         <hr />
 
